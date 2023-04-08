@@ -1,0 +1,43 @@
+spring:
+  kafka:
+    listener:
+      concurrency: 3
+      poll-timeout: 5000
+      monitor-interval: 60s
+      ack-mode: record
+    producer:
+      client-id: ORG_BU_PRDCTLG
+      bootstrap-servers:
+        - localhost:9092
+        - localhost:9093
+        - localhost:9094
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      transaction-id-prefix: tx-
+#      properties:
+#        spring.json.add.type.headers: false
+    consumer:
+      group-id: ORG_BU_STORE1_PRDUPD
+      bootstrap-servers:
+        - localhost:9092
+        - localhost:9093
+        - localhost:9094
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      properties:
+        isolation.level: read_committed
+        partition.assignment.strategy: org.apache.kafka.clients.consumer.CooperativeStickyAssignor
+        spring.json.trusted.packages: com.github.sivaone.learnkafka.domain
+        spring.json.value.default.type: com.github.sivaone.learnkafka.domain.Product
+app:
+  product:
+    producer:
+      topic: products
+    consumer:
+      topic: products
+logging:
+  level:
+    root: info
+    org.springframework.kafka.transaction: debug
