@@ -1,7 +1,7 @@
 ---
 # To learn about configuring Kafka for access across networks see
 # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
-version: '3'
+version: '3.9'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.3
@@ -69,7 +69,7 @@ services:
   schemaregistry:
     image: confluentinc/cp-schema-registry:7.3.3
     container_name: schemaregistry
-    restart: always
+    restart: unless-stopped
     depends_on:
       - zookeeper
       - broker1
@@ -88,7 +88,7 @@ services:
   restproxy:
     image: confluentinc/cp-kafka-rest:7.3.3
     container_name: restproxy
-    restart: always
+    restart: unless-stopped
     depends_on:
       - zookeeper
       - broker1
