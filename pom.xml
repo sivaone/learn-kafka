@@ -19,7 +19,8 @@
 
     <modules>
         <module>simple-producer-consumer</module>
-    </modules>
+		<module>producer-consumer-factory</module>
+	</modules>
 
     <properties>
 		<java.version>17</java.version>
